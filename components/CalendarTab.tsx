@@ -479,7 +479,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({
                 className={`
                   min-h-[55px] relative transition-all group/cell hover:bg-white/5 flex flex-col justify-between overflow-hidden
                   ${!dayObj.currentMonth ? 'bg-slate-800 text-slate-600' : 
-                    (i % 7 === 0 || i % 7 === 6 ? 'bg-lime-500/20' : 'bg-[#0f172a]')
+                    (i % 7 === 0 || i % 7 === 6 ? 'bg-[#ccff00]/60 text-black' : 'bg-[#0f172a]')
                   }
                   ${isToday ? 'animate-pulse ring-1 ring-lime-400 z-10' : ''}
                   ${isToday && shifts.length === 0 && !(i % 7 === 0 || i % 7 === 6) ? 'bg-lime-900/20' : ''}
@@ -502,7 +502,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({
                       text-[8px] font-black w-4 h-4 flex items-center justify-center rounded-full
                       ${shifts.length > 0 ? 'bg-black/20 text-white shadow-sm' : 
                         isToday ? 'bg-lime-500 text-slate-900 shadow-[0_0_10px_rgba(163,230,53,0.5)]' : 
-                        isSunday ? 'text-slate-900' :
+                        (i % 7 === 0 || i % 7 === 6) ? 'text-black font-black' :
                         'text-slate-500 group-hover/cell:text-slate-300'}
                     `}>
                       {dayObj.day}
@@ -533,7 +533,7 @@ const CalendarTab: React.FC<CalendarTabProps> = ({
 
                   {/* Holiday Name at Bottom */}
                   {holidayName && (
-                    <div className={`w-full text-[6px] font-bold uppercase truncate px-0.5 leading-tight text-center mt-auto relative z-30 ${shifts.length > 0 ? 'text-white/90 drop-shadow-md' : isSunday ? 'text-slate-900/80' : 'text-yellow-500/80'}`}>
+                    <div className={`w-full text-[7px] font-black uppercase px-0.5 leading-[1.1] text-center mt-auto pb-0.5 relative z-30 ${shifts.length > 0 ? 'text-white drop-shadow-md' : (i % 7 === 0 || i % 7 === 6) ? 'text-black' : 'text-yellow-500'}`}>
                       {holidayName}
                     </div>
                   )}
