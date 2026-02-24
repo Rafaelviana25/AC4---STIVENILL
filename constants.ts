@@ -1,4 +1,3 @@
-
 import { ShiftType } from './types';
 
 export const DAYS_OF_WEEK = [
@@ -17,7 +16,7 @@ export const MONTH_NAMES = [
 ];
 
 export const DEFAULT_SHIFT_TYPES: ShiftType[] = [
-  { id: 'ordinario', name: 'TURNO', label: 'TURNO', color: '#0000FF', textColor: '#FFFFFF', fontSize: 8 },
+  { id: 'ordinario', name: 'TURNO', label: 'TURNO', color: '#3B82F6', textColor: '#FFFFFF', fontSize: 10 },
   { id: 'extra_ac4', name: 'EXTRA AC4', label: 'EXTRA', color: '#EF4444', textColor: '#FFFFFF', fontSize: 10 }
 ];
 
@@ -40,7 +39,6 @@ export const WHATSAPP_GROUPS = [
 
 /**
  * Feriados e Pontos Facultativos (Formato MM-DD para recorrência anual)
- * Mapeado conforme as datas específicas solicitadas (DD/MM -> MM-DD)
  */
 export const HOLIDAYS: Record<string, string> = {
   // Feriados Nacionais

@@ -8,16 +8,16 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 bg-[#020617] text-white shadow-2xl z-50 transition-colors duration-300">
-      <div className="container mx-auto px-6 py-5 flex items-center justify-start max-w-lg">
-        {/* TÍTULO AJUSTADO CONFORME SOLICITAÇÃO: AC4 (BRANCO) STIVENILL (VERDE) */}
-        <h1 className="text-2xl font-black uppercase flex items-center tracking-tighter leading-none">
-          <span className="text-white">AC4</span>
-          <span className="text-emerald-500 ml-2">STIVENILL</span>
+    <header className="fixed top-0 left-0 right-0 bg-[#020617]/80 backdrop-blur-md border-b border-white/5 z-50 transition-all duration-300">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-center max-w-lg">
+        {/* TÍTULO AJUSTADO CONFORME SOLICITAÇÃO: AC4 (BRANCO) STIVENILL (VERDE NEON/AZUL) */}
+        <h1 className="text-lg font-black uppercase flex items-center tracking-tighter leading-none select-none">
+          <span className="text-slate-200 drop-shadow-md">AC4</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-blue-500 ml-2 drop-shadow-sm">STIVENILL</span>
         </h1>
       </div>
-      {/* FITA VERDE (LINHA DE SEPARAÇÃO) SOLICITADA */}
-      <div className="h-1 w-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)]"></div>
+      {/* FITA (LINHA DE SEPARAÇÃO) SOLICITADA */}
+      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-lime-500/50 to-transparent"></div>
     </header>
   );
 };

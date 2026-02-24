@@ -102,11 +102,14 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#020617] pb-20 transition-colors duration-500 overflow-x-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-[#020617] via-[#0f172a] to-[#172554] pb-24 text-slate-200 font-sans selection:bg-lime-400 selection:text-slate-900 overflow-x-hidden">
         <Header theme={theme} />
         
-        <main className={`container mx-auto max-w-lg transition-all duration-300 w-full ${
-          activeTab === 'agenda' ? 'pt-24' : 'pt-20 px-4'
+        <main className={`container mx-auto max-w-lg transition-all duration-500 w-full ${
+          activeTab === 'agenda' ? 'pt-16 px-0' : 
+          activeTab === 'calc' ? 'pt-16 px-4' :
+          activeTab === 'report' ? 'pt-16 px-4' :
+          'pt-24 px-4'
         }`}>
           {activeTab === 'calc' && (
             <CalculatorTab 
@@ -156,33 +159,36 @@ const App: React.FC = () => {
           )}
         </main>
 
-        {/* Menu Inferior Fixo, Fino e Integrado à Base - Reordenado */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 flex items-stretch py-1.5 z-[100] animate-fade-in overflow-hidden shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        {/* Fixed Bottom Navigation */}
+        <nav className="fixed bottom-0 left-0 right-0 bg-[#020617]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-around py-4 z-[100] animate-fade-in shadow-[0_-5px_20px_rgba(0,0,0,0.8)]">
           {/* 1º Agenda */}
           <button 
             onClick={() => setActiveTab('agenda')} 
-            className={`flex-1 flex flex-col items-center justify-center py-1 transition-all duration-300 ${activeTab === 'agenda' ? 'text-indigo-400 scale-105' : 'text-slate-500 hover:text-slate-400'}`}
+            className={`relative flex flex-col items-center justify-center p-1 transition-all duration-300 group ${activeTab === 'agenda' ? 'text-lime-400 -translate-y-1' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <i className={`fas fa-calendar-alt ${activeTab === 'agenda' ? 'text-lg' : 'text-base'}`}></i>
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] mt-0.5">Agenda</span>
+            <div className={`absolute inset-0 bg-lime-500/10 blur-xl rounded-full transition-opacity duration-300 ${activeTab === 'agenda' ? 'opacity-100' : 'opacity-0'}`}></div>
+            <i className={`fas fa-calendar-alt relative z-10 ${activeTab === 'agenda' ? 'text-xl drop-shadow-[0_0_8px_rgba(163,230,53,0.5)]' : 'text-lg'}`}></i>
+            <span className="text-[10px] font-black uppercase tracking-widest mt-1.5 relative z-10">Agenda</span>
           </button>
 
           {/* 2º Cálculo */}
           <button 
             onClick={() => setActiveTab('calc')} 
-            className={`flex-1 flex flex-col items-center justify-center py-1 transition-all duration-300 ${activeTab === 'calc' ? 'text-blue-500 scale-105' : 'text-slate-500 hover:text-slate-400'}`}
+            className={`relative flex flex-col items-center justify-center p-1 transition-all duration-300 group ${activeTab === 'calc' ? 'text-lime-400 -translate-y-1' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <i className={`fas fa-calculator ${activeTab === 'calc' ? 'text-lg' : 'text-base'}`}></i>
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] mt-0.5">Cálculo</span>
+            <div className={`absolute inset-0 bg-lime-500/10 blur-xl rounded-full transition-opacity duration-300 ${activeTab === 'calc' ? 'opacity-100' : 'opacity-0'}`}></div>
+            <i className={`fas fa-calculator relative z-10 ${activeTab === 'calc' ? 'text-xl drop-shadow-[0_0_8px_rgba(163,230,53,0.5)]' : 'text-lg'}`}></i>
+            <span className="text-[10px] font-black uppercase tracking-widest mt-1.5 relative z-10">Cálculo</span>
           </button>
           
           {/* 3º Mensal */}
           <button 
             onClick={() => setActiveTab('report')} 
-            className={`flex-1 flex flex-col items-center justify-center py-1 transition-all duration-300 ${activeTab === 'report' ? 'text-emerald-500 scale-105' : 'text-slate-500 hover:text-slate-400'}`}
+            className={`relative flex flex-col items-center justify-center p-1 transition-all duration-300 group ${activeTab === 'report' ? 'text-lime-400 -translate-y-1' : 'text-slate-500 hover:text-slate-300'}`}
           >
-            <i className={`fas fa-chart-line ${activeTab === 'report' ? 'text-lg' : 'text-base'}`}></i>
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] mt-0.5">Mensal</span>
+            <div className={`absolute inset-0 bg-lime-500/10 blur-xl rounded-full transition-opacity duration-300 ${activeTab === 'report' ? 'opacity-100' : 'opacity-0'}`}></div>
+            <i className={`fas fa-chart-pie relative z-10 ${activeTab === 'report' ? 'text-xl drop-shadow-[0_0_8px_rgba(163,230,53,0.5)]' : 'text-lg'}`}></i>
+            <span className="text-[10px] font-black uppercase tracking-widest mt-1.5 relative z-10">Mensal</span>
           </button>
         </nav>
 

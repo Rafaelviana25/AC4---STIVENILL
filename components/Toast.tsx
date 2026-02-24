@@ -14,9 +14,9 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   }, [onClose]);
 
   const bgColors = {
-    success: 'bg-green-500',
-    error: 'bg-red-500',
-    info: 'bg-blue-500'
+    success: 'bg-lime-900/80 border-lime-700/50 text-lime-200 shadow-lime-900/20',
+    error: 'bg-red-900/80 border-red-700/50 text-red-200 shadow-red-900/20',
+    info: 'bg-blue-900/80 border-blue-700/50 text-blue-200 shadow-blue-900/20'
   };
 
   const icons = {
@@ -26,9 +26,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   };
 
   return (
-    <div className={`fixed top-20 right-4 ${bgColors[type]} text-white px-4 py-3 rounded-lg shadow-xl z-[100] animate-fade-in flex items-center space-x-3 max-w-xs`}>
-      <i className={`fas ${icons[type]}`}></i>
-      <span className="text-sm font-medium">{message}</span>
+    <div className={`fixed top-24 right-4 ${bgColors[type]} backdrop-blur-xl border px-4 py-3 rounded-2xl shadow-2xl z-[1000] animate-fade-in flex items-center space-x-3 max-w-xs transition-all transform hover:scale-105`}>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-white/10 shadow-inner`}>
+        <i className={`fas ${icons[type]} text-lg`}></i>
+      </div>
+      <span className="text-xs font-black uppercase tracking-wide text-white drop-shadow-md">{message}</span>
     </div>
   );
 };
