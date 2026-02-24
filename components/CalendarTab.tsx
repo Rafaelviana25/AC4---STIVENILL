@@ -479,13 +479,11 @@ const CalendarTab: React.FC<CalendarTabProps> = ({
                 className={`
                   min-h-[55px] relative transition-all group/cell hover:bg-white/5 flex flex-col justify-between overflow-hidden
                   ${!dayObj.currentMonth ? 'bg-slate-800 text-slate-600' : 
-                    (isSunday ? 'bg-lime-400 text-slate-950' : 
-                      (isSaturday ? 'bg-lime-500/10' : 'bg-[#0f172a]')
-                    )
+                    (i % 7 === 0 || i % 7 === 6 ? 'bg-lime-500/20' : 'bg-[#0f172a]')
                   }
                   ${isToday ? 'animate-pulse ring-1 ring-lime-400 z-10' : ''}
-                  ${isToday && shifts.length === 0 && !isSunday ? 'bg-lime-900/20' : ''}
-                  ${holidayName && dayObj.currentMonth && shifts.length === 0 && !isSunday ? 'bg-white/5' : ''}
+                  ${isToday && shifts.length === 0 && !(i % 7 === 0 || i % 7 === 6) ? 'bg-lime-900/20' : ''}
+                  ${holidayName && dayObj.currentMonth && shifts.length === 0 && !(i % 7 === 0 || i % 7 === 6) ? 'bg-white/5' : ''}
                 `}
               >
                 {/* Background Layer for Shifts */}
