@@ -1,73 +1,61 @@
-@import "tailwindcss";
+import { ShiftType } from './types';
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-}
+export const DAYS_OF_WEEK = [
+  'Domingo',
+  'Segunda-feira',
+  'Terça-feira',
+  'Quarta-feira',
+  'Quinta-feira',
+  'Sexta-feira',
+  'Sábado'
+];
 
-@layer utilities {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+export const MONTH_NAMES = [
+  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+];
 
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.4);
-  }
-}
+export const DEFAULT_SHIFT_TYPES: ShiftType[] = [
+  { id: 'ordinario', name: 'TURNO', label: 'TURNO', color: '#3B82F6', textColor: '#FFFFFF', fontSize: 10 },
+  { id: 'extra_ac4', name: 'EXTRA AC4', label: 'EXTRA', color: '#EF4444', textColor: '#FFFFFF', fontSize: 10 }
+];
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+export const AC4_RULES = {
+  BLUE: { DAY: 26.47, NIGHT: 29.80 },
+  RED: { DAY: 36.41, NIGHT: 41.38 }
+};
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
+export const DEFAULT_RATES = {
+  Praca: 26.47,
+  Oficial: 35.00,
+  OficialSuperior: 45.00
+};
 
-/* Global Selection Style */
-::selection {
-  background-color: #a3e635; /* lime-400 */
-  color: #0f172a; /* slate-900 */
-}
+export const WHATSAPP_GROUPS = [
+  { id: '1', name: 'Coordenação Capital - PMGO', admin: 'Sgt. Plantão', phone: '5562999999999' },
+  { id: '2', name: 'Interior - 1º CRPM', admin: 'Subten. Coord.', phone: '5562888888888' },
+  { id: '3', name: 'Unidades Especializadas', admin: 'Cabo Auxiliar', phone: '5562777777777' }
+];
 
-/* Global Reset & Mobile Optimization */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  overscroll-behavior-y: contain;
-  background-color: #020617; /* slate-950 */
-}
-
-/* Global Scrollbar (Fallback) */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #1e293b; /* slate-800 */
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #334155; /* slate-700 */
-}
+/**
+ * Feriados e Pontos Facultativos (Formato MM-DD para recorrência anual)
+ */
+export const HOLIDAYS: Record<string, string> = {
+  // Feriados Nacionais
+  "01-01": "Ano Novo",
+  "04-03": "Sexta-feira Santa",
+  "04-21": "Dia de Tiradentes",
+  "05-01": "Dia do Trabalho",
+  "09-07": "Independência do Brasil",
+  "10-12": "Nossa Sra. Aparecida",
+  "11-02": "Dia de Finados",
+  "11-15": "Proclamação da República",
+  "11-20": "Dia da Consciência Negra",
+  "12-25": "Natal",
+  
+  // Pontos Facultativos
+  "02-16": "Carnaval",
+  "02-17": "Carnaval",
+  "02-18": "Quarta-feira de Cinzas",
+  "06-04": "Corpus Christi"
+};
