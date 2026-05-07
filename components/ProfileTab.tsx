@@ -11,7 +11,6 @@ interface ProfileTabProps {
   onRestore: (data: any) => void;
   onShowToast: (message: string, type: 'success' | 'error' | 'info') => void;
   monthlyRecords: WorkRecord[];
-  session?: any;
 }
 
 const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowToast, monthlyRecords }) => {

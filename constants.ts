@@ -19,18 +19,6 @@ export const AC4_RULES = {
   RED: { DAY: 36.41, NIGHT: 41.38 }
 };
 
-export const DEFAULT_RATES = {
-  Praca: 26.47,
-  Oficial: 35.00,
-  OficialSuperior: 45.00
-};
-
-export const WHATSAPP_GROUPS = [
-  { id: '1', name: 'Coordenação Capital - PMGO', admin: 'Sgt. Plantão', phone: '5562999999999' },
-  { id: '2', name: 'Interior - 1º CRPM', admin: 'Subten. Coord.', phone: '5562888888888' },
-  { id: '3', name: 'Unidades Especializadas', admin: 'Cabo Auxiliar', phone: '5562777777777' }
-];
-
 /**
  * Feriados e Pontos Facultativos (Formato MM-DD para recorrência anual)
  */
