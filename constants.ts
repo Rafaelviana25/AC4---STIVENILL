@@ -1,24 +1,27 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+import { createClient } from '@supabase/supabase-js';
 
-node_modules
-dist
-dist-ssr
-*.local
+// Função para limpar as chaves de qualquer caractere invisível ou espaço
+const cleanKey = (key: string) => {
+  if (!key) return '';
+  return key.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, "").replace(/\s/g, '');
+};
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+const rawUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+
+const supabaseUrl = cleanKey(rawUrl).replace(/\/$/, '');
+let supabaseAnonKey = cleanKey(rawKey);
+
+// Se o usuário colou "sb_ey..." (prefixo sb_ concatenado com JWT), removemos o prefixo.
+if (supabaseAnonKey.startsWith('sb_ey')) {
+  supabaseAnonKey = supabaseAnonKey.substring(3);
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storageKey: 'ac4-session-v4'
+  }
+});

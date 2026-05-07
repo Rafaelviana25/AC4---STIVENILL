@@ -1,17 +1,12 @@
+import { CapacitorConfig } from '@capacitor/cli';
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
+const config: CapacitorConfig = {
+  appId: 'com.ac4stivenill.app',
+  appName: 'AC4 STIVENILL',
+  webDir: 'dist',
+  server: {
+    androidScheme: 'https'
+  }
+};
 
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
-}
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default config;

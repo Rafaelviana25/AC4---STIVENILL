@@ -1,51 +1,20 @@
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-export interface WorkRecord {
-  id: string;
-  date: string;
-  startHour: string;
-  endHour: string;
-  duration: number;
-  value: number;
-  weekday: string;
-  raiNumber?: string;
-  shiftConfig?: {
-    label: string;
-    color: string;
-    textColor: string;
-    fontSize: number;
-  };
-}
+# Run and deploy your AI Studio app
 
-export interface AC4RateTable {
-  Praca: number;
-  Oficial: number;
-  OficialSuperior: number;
-}
+This contains everything you need to run your app locally.
 
-export interface ShiftType {
-  id: string;
-  name: string;
-  label: string;
-  color: string;
-  textColor: string;
-  fontSize?: number;
-  startTime?: string;
-  endTime?: string;
-  showTime?: boolean;
-}
+View your app in AI Studio: https://ai.studio/apps/2bf389b0-c475-4355-9988-d53aa402dc88
 
-export interface CalendarEvent {
-  id: string;
-  date: string; // YYYY-MM-DD
-  shiftTypeIds: string[];
-  observation: string;
-  overrides?: Record<string, { label?: string; color?: string; textColor?: string; fontSize?: number }>;
-}
+## Run Locally
 
-declare global {
-  interface Window {
-    AndroidWidget?: {
-      updateCalendarData: (data: string) => void;
-    };
-  }
-}
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

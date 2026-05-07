@@ -1,157 +1,74 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-export const TacticalColorPicker = ({ color, onChange, onConfirm, onClose, previewConfig }: { color: string, onChange: (hex: string) => void, onConfirm: (hex: string) => void, onClose: () => void, previewConfig?: { label: string, textColor: string, bgColor: string, fontSize: number } }) => {
-  const [hex, setHex] = useState(color || '#059669');
-  const [hue, setHue] = useState(0); 
-  
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+import React, { useEffect, useState } from 'react';
 
-  const hexToRgb = (hex: string) => {
-    const r = parseInt(hex.slice(1, 3), 16) || 0;
-    const g = parseInt(hex.slice(3, 5), 16) || 0;
-    const b = parseInt(hex.slice(5, 7), 16) || 0;
-    return { r, g, b };
-  };
-
-  const rgbToHex = (r: number, g: number, b: number) => {
-    return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
-  };
-
-  const { r, g, b } = hexToRgb(hex);
-
-  const handleRgbChange = (channel: 'r' | 'g' | 'b', val: string) => {
-    const n = Math.max(0, Math.min(255, parseInt(val) || 0));
-    const newRgb = { r, g, b, [channel]: n };
-    const newHex = rgbToHex(newRgb.r, newRgb.g, newRgb.b);
-    setHex(newHex);
-    onChange(newHex);
-  };
-
-  const drawCanvas = useCallback(() => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    const whiteGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    whiteGrad.addColorStop(0, 'white');
-    whiteGrad.addColorStop(1, 'transparent');
-    ctx.fillStyle = whiteGrad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    const blackGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    blackGrad.addColorStop(0, 'transparent');
-    blackGrad.addColorStop(1, 'black');
-    ctx.fillStyle = blackGrad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }, [hue]);
-
-  useEffect(() => {
-    drawCanvas();
-  }, [drawCanvas]);
-
-  const updateColorFromCanvas = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    const clampedX = Math.max(0, Math.min(canvas.width - 1, x));
-    const clampedY = Math.max(0, Math.min(canvas.height - 1, y));
-    
-    const imageData = ctx.getImageData(clampedX, clampedY, 1, 1).data;
-    const newHex = rgbToHex(imageData[0], imageData[1], imageData[2]);
-    setHex(newHex);
-    onChange(newHex);
-  };
+const SplashScreen: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(true);
 
   return (
-    <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div 
-        className="w-[300px] bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-white/10 animate-fade-in"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="relative group cursor-crosshair">
-          <canvas 
-            ref={canvasRef}
-            width={300}
-            height={150}
-            className="w-full h-[150px] touch-none"
-            onMouseDown={updateColorFromCanvas}
-            onMouseMove={(e) => e.buttons === 1 && updateColorFromCanvas(e)}
-            onTouchMove={updateColorFromCanvas}
-            onTouchStart={updateColorFromCanvas}
+    <div className={`fixed inset-0 z-[100] bg-[#020617] flex flex-col items-center justify-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="absolute inset-0 bg-gradient-to-br from-lime-900/20 via-[#0f172a] to-blue-900/20 pointer-events-none"></div>
+      
+      <div className="relative flex flex-col items-center animate-fade-in z-10">
+        {/* Container da Logo (Distintivo AC4) */}
+        <div className="relative w-64 h-72 flex items-center justify-center group">
+          <div className="absolute inset-0 bg-gradient-to-tr from-lime-500/30 to-blue-500/30 blur-[60px] rounded-full animate-pulse"></div>
+          <img 
+            src="logo.png" 
+            alt="AC4 Tactical Badge" 
+            className="w-full h-full object-contain drop-shadow-[0_0_50px_rgba(163,230,53,0.3)] animate-badge-entrance relative z-10 transition-transform duration-700 group-hover:scale-105"
+            onError={(e) => {
+              console.error("Erro ao carregar logo.png na Splash Screen");
+            }}
           />
-          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none rounded-t-3xl"></div>
         </div>
-
-        <div className="p-5 space-y-5">
-          {previewConfig && (
-            <div className="flex justify-center pb-2 border-b border-white/5">
-               <div 
-                  style={{ backgroundColor: previewConfig.bgColor, color: previewConfig.textColor, fontSize: `${previewConfig.fontSize || 10}px` }} 
-                  className="w-12 h-12 rounded-lg shadow-lg flex items-center justify-center font-black border border-white/10 overflow-hidden p-0.5 break-all leading-none text-center"
-                >
-                  {previewConfig.label}
-                </div>
-            </div>
-          )}
-
-          <div className="flex items-center gap-4">
-             <div className="w-12 h-12 rounded-2xl border border-white/20 shadow-lg shrink-0 transition-transform hover:scale-105" style={{ backgroundColor: hex }}></div>
-             <div className="flex-1 space-y-2">
-               <input 
-                type="range" 
-                min="0"
-                max="360"
-                value={hue}
-                className="w-full h-3 rounded-full appearance-none cursor-pointer shadow-inner"
-                style={{ background: 'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)' }}
-                onChange={(e) => setHue(parseInt(e.target.value))}
-               />
-               <div className="flex justify-between text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                 <span>Matiz</span>
-                 <span>{hue}°</span>
-               </div>
-             </div>
-          </div>
-
-          <div className="flex gap-2">
-            {[
-              { label: 'R', val: r, key: 'r' as const },
-              { label: 'G', val: g, key: 'g' as const },
-              { label: 'B', val: b, key: 'b' as const }
-            ].map(item => (
-              <div key={item.key} className="flex-1">
-                <input 
-                  type="number" 
-                  value={item.val}
-                  onChange={e => handleRgbChange(item.key, e.target.value)}
-                  className="w-full bg-zinc-800 text-white text-center py-2.5 rounded-xl border border-white/5 outline-none text-xs font-bold focus:ring-2 focus:ring-zinc-500/50 transition-all" 
-                />
-                <span className="text-[9px] text-zinc-500 font-bold mt-1.5 block text-center uppercase tracking-wider">{item.label}</span>
-              </div>
-            ))}
+        
+        <div className="mt-12 flex flex-col items-center text-center space-y-6">
+          <h2 className="text-2xl font-black uppercase tracking-tighter italic drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] flex items-center gap-2">
+            <span className="text-lime-500">AC4</span>
+            <span className="text-white opacity-40">-</span>
+            <span className="text-white">STIVENILL</span>
+          </h2>
+          
+          {/* Barra de carregamento tática */}
+          <div className="relative h-1.5 w-64 bg-slate-800/50 rounded-full overflow-hidden border border-white/10 backdrop-blur-sm shadow-inner">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-lime-500/50 to-transparent w-1/2 animate-loading-bar blur-sm"></div>
+            <div className="h-full bg-gradient-to-r from-lime-400 via-green-500 to-blue-500 w-full animate-loading-bar shadow-[0_0_10px_rgba(163,230,53,0.8)]"></div>
           </div>
           
-          <button 
-            onClick={() => onConfirm(hex)}
-            className="w-full bg-gradient-to-r from-zinc-700 to-zinc-600 hover:from-zinc-600 hover:to-zinc-500 text-white font-black py-3.5 rounded-xl text-[10px] uppercase tracking-widest shadow-lg shadow-zinc-900/20 active:scale-95 transition-all"
-          >
-            Confirmar Cor
-          </button>
+          <p className="text-[10px] font-black uppercase tracking-[0.5em] text-lime-400/80 animate-pulse drop-shadow-sm">
+            Sincronizando Módulos Operacionais
+          </p>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes badge-entrance {
+          0% { transform: scale(0.8) translateY(30px); opacity: 0; filter: brightness(0) contrast(1.5); }
+          100% { transform: scale(1) translateY(0); opacity: 1; filter: brightness(1.1) contrast(1.1); }
+        }
+        @keyframes aura-pulse {
+          0%, 100% { opacity: 0.3; transform: scale(0.95); }
+          50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        @keyframes loading-bar {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-badge-entrance {
+          animation: badge-entrance 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-aura-pulse {
+          animation: aura-pulse 4s ease-in-out infinite;
+        }
+        .animate-loading-bar {
+          animation: loading-bar 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+      `}} />
     </div>
   );
 };
+
+export default SplashScreen;
