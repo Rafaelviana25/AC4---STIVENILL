@@ -478,8 +478,8 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-180px)] animate-fade-in px-2">
-      <div className="mt-2 mb-10">
+    <div className="flex flex-col h-[calc(100vh-180px)] animate-fade-in px-2 overflow-y-auto scrollbar-hide pb-4">
+      <div className="mt-2 mb-6 flex-shrink-0">
         <div className="flex items-center space-x-3 mb-3">
           <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
           <h2 className="text-xl font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg">
@@ -527,9 +527,56 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
           </div>
           <i className="fas fa-chevron-right text-slate-600 group-hover:text-lime-400 transition-colors"></i>
         </button>
+
+        <div className="mt-4 flex flex-col items-center space-y-4 pt-4 border-t border-white/5">
+          <div className="flex flex-col items-center gap-2 mb-2 w-full">
+            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] text-center px-4">
+              AJUDE-NOS A MELHORAR O APP, CONTRIBUA!
+            </span>
+            <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-lime-500/30 to-transparent"></div>
+          </div>
+          
+          <div className="bg-white p-3 rounded-3xl shadow-2xl w-32 h-32 flex items-center justify-center ring-4 ring-lime-500/10">
+            <img 
+              src="/qrcode-pix.png" 
+              alt="QR Code Pix" 
+              className="w-full h-full object-contain"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          
+          <button 
+            onClick={() => {
+              navigator.clipboard.writeText('00020126740014br.gov.bcb.pix013613d60d20-3d4f-4d74-a7b6-b2cfcf8c939f0212AC4STIVENILL5204000053039865802BR5914GERADOR DE PIX6009SAO PAULO62070503***6304104A');
+              onShowToast('Chave Pix copiada!', 'success');
+            }}
+            className="flex flex-col items-center group active:scale-95 transition-all w-full max-w-[280px]"
+          >
+            <div className="bg-slate-900 border border-white/5 px-4 py-3 rounded-2xl flex flex-col items-center gap-4 w-full group-hover:border-lime-500/50 transition-all shadow-xl">
+              <div className="flex flex-col items-center w-full text-center">
+                <span className="text-[8px] font-black text-lime-500 uppercase tracking-widest mb-2">Pix Copia e Cola</span>
+                <span className="text-[9px] font-mono text-slate-400 break-all leading-relaxed">
+                  00020126740014br.gov.bcb.pix013613d60d20-3d4f-4d74-a7b6-b2cfcf8c939f0212AC4STIVENILL5204000053039865802BR5914GERADOR DE PIX6009SAO PAULO62070503***6304104A
+                </span>
+              </div>
+              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-lime-500/10 flex items-center justify-center text-lime-400 group-hover:bg-lime-500 group-hover:text-slate-900 transition-all shadow-inner">
+                <i className="fas fa-copy text-sm"></i>
+              </div>
+            </div>
+            <span className="mt-2 text-[8px] font-bold text-slate-600 uppercase tracking-widest group-hover:text-lime-500/70 transition-colors">Clique para copiar o código</span>
+          </button>
+        </div>
       </div>
 
-      <div className="mt-auto pb-6">
+      <div className="mt-auto pb-6 text-center">
+        <a 
+          href="https://ac4stivenill.vercel.app" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] hover:text-lime-400 transition-colors"
+        >
+          ACESSO WEB: https://ac4stivenill.vercel.app
+        </a>
       </div>
     </div>
   );
