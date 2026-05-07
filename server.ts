@@ -1,83 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/day_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0F172A"
-    android:orientation="vertical"
+    android:layout_height="55dp"
+    android:background="#FFFFFF"
     android:padding="0dp">
 
-    <!-- Header -->
-    <RelativeLayout
-        android:id="@+id/header_container"
+    <!-- Container para os turnos -->
+    <LinearLayout
+        android:id="@+id/shifts_container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#0F172A"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/btn_prev"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="#1E293B"
-            android:gravity="center"
-            android:text="‹"
-            android:textColor="#94A3B8"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/shift_1_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/shift_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="TURNO"
+                android:textColor="#FFFFFF"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/shift_2_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/shift_label_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="EXTRA"
+                android:textColor="#FFFFFF"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- Ponto de Observação -->
+    <ImageView
+        android:id="@+id/observation_dot"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:src="#60A5FA"
+        android:visibility="gone" />
+
+    <!-- Número do dia -->
+    <RelativeLayout
+        android:id="@+id/day_number_container"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="2dp">
+        
         <TextView
-            android:id="@+id/widget_month_year"
-            android:layout_width="wrap_content"
+            android:id="@+id/day_text"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="ABRIL 2026"
-            android:textColor="#E2E8F0"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btn_next"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="#1E293B"
-            android:gravity="center"
-            android:text="›"
-            android:textColor="#94A3B8"
-            android:textSize="20sp"
+            android:text="1"
+            android:textColor="#000000"
+            android:textSize="8sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <!-- Weekday Headers -->
-    <LinearLayout
+    <!-- Label de Feriado -->
+    <TextView
+        android:id="@+id/holiday_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0F172A"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEG" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="TER" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUA" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUI" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEX" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SÁB" android:textColor="#A3E635" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="DOM" android:textColor="#A3E635" android:textSize="8sp" android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- Grid -->
-    <GridView
-        android:id="@+id/calendar_grid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#334155"
-        android:horizontalSpacing="1dp"
-        android:numColumns="7"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#E6EF4444"
+        android:gravity="center"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:text="FERIADO"
+        android:textColor="#FFFFFF"
+        android:textSize="6sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,16 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0f172a"
-    android:orientation="vertical"
-    android:padding="16dp">
+package com.stivenill.ac4
 
-    <TextView
-        android:id="@+id/widget_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="#ffffff"
-        android:textSize="14sp"
-        android:text="Carregando..." />
-</LinearLayout>
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.Context
+import android.widget.RemoteViews
+import android.content.Context.MODE_PRIVATE
+
+class CalendarWidgetProvider : AppWidgetProvider() {
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+        for (appWidgetId in appWidgetIds) {
+            val views = RemoteViews(context.packageName, R.layout.widget_layout)
+            
+            // Lê os dados salvos pelo app (SharedPreferences)
+            val prefs = context.getSharedPreferences("CapacitorStorage", MODE_PRIVATE)
+            val extrasData = prefs.getString("extras_data", "Sem extras hoje")
+            
+            views.setTextViewText(R.id.widget_text, extrasData)
+            
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+    }
+}
