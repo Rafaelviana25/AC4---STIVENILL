@@ -1,9 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialLayout="@layout/widget_calendar"
-    android:minWidth="250dp"
-    android:minHeight="250dp"
-    android:previewImage="@layout/widget_calendar"
-    android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
-    android:widgetCategory="home_screen" />
+package com.ac4stivenill.app;
+
+import android.os.Bundle;
+import android.webkit.WebView;
+import com.getcapacitor.BridgeActivity;
+import com.ac4stivenill.app.R;
+
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (this.bridge != null && this.bridge.getWebView() != null) {
+            WebView webView = this.bridge.getWebView();
+            webView.addJavascriptInterface(new WidgetBridge(this), "AndroidWidget");
+        }
+    }
+}
