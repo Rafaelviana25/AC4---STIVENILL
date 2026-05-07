@@ -479,8 +479,8 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
 
   return (
     <div className="flex flex-col h-[calc(100vh-180px)] animate-fade-in px-2 overflow-y-auto scrollbar-hide pb-4">
-      <div className="mt-2 mb-6 flex-shrink-0">
-        <div className="flex items-center space-x-3 mb-3">
+      <div className="mt-1 mb-4 flex-shrink-0">
+        <div className="flex items-center space-x-3 mb-2">
           <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
           <h2 className="text-xl font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg">
             Perfil do <span className="text-lime-400">Usuário</span>
@@ -488,14 +488,14 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
         </div>
         {userName && (
           <div className="pl-4">
-            <h3 className="text-xl font-black text-slate-100 uppercase tracking-tight">
+            <h3 className="text-xl font-black text-slate-100 uppercase tracking-tight leading-none">
               {userName}
             </h3>
           </div>
         )}
       </div>
 
-      <div className="flex flex-col space-y-3">
+      <div className="flex flex-col space-y-2">
         <button 
           onClick={() => setShowReportsMenu(true)}
           className="w-full bg-slate-900/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between group hover:bg-slate-800/50 transition-all active:scale-[0.98]"
@@ -528,10 +528,10 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
           <i className="fas fa-chevron-right text-slate-600 group-hover:text-lime-400 transition-colors"></i>
         </button>
 
-        <div className="mt-4 flex flex-col items-center space-y-4 pt-4 border-t border-white/5">
-          <div className="flex flex-col items-center gap-2 mb-2 w-full">
+        <div className="mt-2 flex flex-col items-center space-y-2 pt-4 border-t border-white/5">
+          <div className="flex flex-col items-center gap-1 mb-1 w-full">
             <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] text-center px-4">
-              AJUDE-NOS A MELHORAR O APP, CONTRIBUA!
+              CONTRIBUA E AJUDE A MELHORAR O APLICATIVO!
             </span>
             <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-lime-500/30 to-transparent"></div>
           </div>

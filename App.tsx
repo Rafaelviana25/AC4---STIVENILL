@@ -137,7 +137,7 @@ const App: React.FC = () => {
         
         <main 
           className="container mx-auto max-w-lg w-full px-4"
-          style={{ paddingTop: 'calc(4rem + var(--sat))' }}
+          style={{ paddingTop: 'calc(4.25rem + var(--sat))' }}
         >
           {activeTab === 'calc' && (
             <CalculatorTab 

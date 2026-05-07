@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = () => {
         {/* TÍTULO AJUSTADO CONFORME SOLICITAÇÃO: AC4 (BRANCO) STIVENILL (VERDE NEON/AZUL) */}
         <div className="flex items-center justify-center h-8">
           <img 
-            src="/LOGO AC4 BRANCO.png" 
+            src="/logo-ac4.png" 
             alt="AC4 STIVENILL" 
             className="h-full w-auto object-contain"
             referrerPolicy="no-referrer"

@@ -62,8 +62,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
     <div className="animate-fade-in space-y-4 w-full max-w-full pb-10">
 
       <div 
-        className="flex items-center space-x-2"
-        style={{ marginBottom: '5px', marginTop: '-11px', marginLeft: '0px', paddingTop: '4px', paddingLeft: '8px', paddingRight: '8px', paddingBottom: '2px' }}
+        className="flex items-center space-x-2 px-2 pt-1 pb-0.5 mb-1 mt-2"
       >
         <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
         <h2 className="font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg flex items-center gap-1">
@@ -73,7 +72,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
       </div>
 
       <div className="bg-[#0f172a]/50 backdrop-blur-xl rounded-2xl shadow-2xl p-4 border border-white/5 text-slate-200 transition-all hover:border-white/10">
-        <div className="space-y-4">
+        <div className="space-y-4 mt-0">
           <div className="group">
             <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 group-focus-within:text-lime-400 transition-colors">Data de Início</label>
             <div className="relative">
