@@ -16,7 +16,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
   onAddRecord, 
   records, 
   onRemoveRecord,
-  onPostToMonthly
+  onPostToMonthly,
 }) => {
   const getLocalDate = () => {
     const now = new Date();
@@ -49,7 +49,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
       duration,
       value: currentValue,
       weekday: weekday,
-      raiNumber: raiNumber.trim()
+      raiNumber: raiNumber.trim(),
     };
 
     onAddRecord(newRecord);
@@ -60,92 +60,93 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
 
   return (
     <div className="animate-fade-in space-y-4 w-full max-w-full pb-10">
-      <div className="flex items-center space-x-2 mb-1 px-1">
+
+      <div 
+        className="flex items-center space-x-2"
+        style={{ marginBottom: '5px', marginTop: '-11px', marginLeft: '0px', paddingTop: '4px', paddingLeft: '8px', paddingRight: '8px', paddingBottom: '2px' }}
+      >
         <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
-        <h2 className="text-lg font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg">
-          Cálculo <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-blue-500">de Escala</span>
+        <h2 className="font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg flex items-center gap-1">
+          <span style={{ fontSize: '18px', lineHeight: '28px' }}>Cálculo</span>
+          <span className="text-lime-400" style={{ fontSize: '18px', lineHeight: '28px' }}>de Escala</span>
         </h2>
       </div>
 
       <div className="bg-[#0f172a]/50 backdrop-blur-xl rounded-2xl shadow-2xl p-4 border border-white/5 text-slate-200 transition-all hover:border-white/10">
         <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="group">
-              <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 group-focus-within:text-lime-400 transition-colors">Data de Início</label>
-              <div className="relative">
-                <input 
-                  type="date" 
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full h-10 px-3 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none transition-all text-slate-200 font-medium text-xs shadow-inner"
-                />
-              </div>
-              <p className="mt-1 text-[8px] font-black text-slate-500 uppercase tracking-[0.2em] px-1 flex items-center">
-                <i className="fas fa-calendar-day mr-1.5 opacity-70"></i>
-                {weekday || "SELECIONE UMA DATA"}
-              </p>
+          <div className="group">
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 group-focus-within:text-lime-400 transition-colors">Data de Início</label>
+            <div className="relative">
+              <input 
+                type="date" 
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full h-12 px-4 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none transition-all text-slate-200 font-medium text-sm shadow-inner"
+              />
             </div>
+            <p className="mt-1 text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] px-1 flex items-center">
+              <i className="fas fa-calendar-day mr-1.5 opacity-70"></i>
+              {weekday || "SELECIONE UMA DATA"}
+            </p>
+          </div>
 
-            <div className="group">
-              <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 group-focus-within:text-lime-400 transition-colors">Nº RAI</label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  value={raiNumber}
-                  onChange={(e) => setRaiNumber(e.target.value.toUpperCase())}
-                  placeholder="OPCIONAL"
-                  className="w-full pl-9 pr-3 h-10 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none text-slate-200 font-bold transition-all text-xs shadow-inner placeholder-slate-700"
-                />
-                <i className="fas fa-file-invoice absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 text-[10px] group-focus-within:text-lime-400 transition-colors"></i>
-              </div>
+          <div className="group">
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 group-focus-within:text-lime-400 transition-colors">Nº RAI</label>
+            <div className="relative">
+              <input 
+                type="text" 
+                value={raiNumber}
+                onChange={(e) => setRaiNumber(e.target.value.toUpperCase())}
+                placeholder="OPCIONAL"
+                className="w-full pl-10 pr-4 h-12 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none text-slate-200 font-bold transition-all text-sm shadow-inner placeholder-slate-700"
+              />
+              <i className="fas fa-file-invoice absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 text-xs group-focus-within:text-lime-400 transition-colors"></i>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="relative group">
-              <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 truncate group-focus-within:text-lime-400 transition-colors">Hora Inicial</label>
-              <div className="relative">
-                <select 
-                  value={startHour}
-                  onChange={(e) => setStartHour(e.target.value)}
-                  className="w-full pl-9 pr-3 h-10 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none appearance-none text-slate-200 font-bold transition-all text-xs shadow-inner"
-                >
-                  {hourOptions.map(h => <option key={h} value={h} className="text-slate-300 bg-slate-900">{h}</option>)}
-                </select>
-                <i className="fas fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[10px] group-focus-within:text-lime-400 transition-colors"></i>
-                <i className="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 text-[8px] pointer-events-none"></i>
-              </div>
-            </div>
-
+          <div className="relative group">
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 truncate group-focus-within:text-lime-400 transition-colors">Hora Inicial</label>
             <div className="relative">
-              <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 truncate">Duração (h)</label>
-              <div className="flex items-center h-10 bg-[#020617]/50 border border-white/5 rounded-xl overflow-hidden transition-all shadow-inner group focus-within:ring-2 focus-within:ring-lime-500/50">
-                <button 
-                  onClick={() => setDuration(prev => Math.max(0, prev - 1))}
-                  className="w-10 h-full flex items-center justify-center text-slate-500 hover:bg-slate-800 active:bg-slate-700 transition-colors border-r border-white/5 hover:text-lime-400"
+              <select 
+                value={startHour}
+                onChange={(e) => setStartHour(e.target.value)}
+                className="w-full pl-10 pr-4 h-12 bg-[#020617]/50 border border-white/5 rounded-xl focus:ring-2 focus:ring-lime-500/50 focus:border-transparent outline-none appearance-none text-slate-200 font-bold transition-all text-sm shadow-inner"
+              >
+                {hourOptions.map(h => <option key={h} value={h} className="text-slate-300 bg-slate-900">{h}</option>)}
+              </select>
+              <i className="fas fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs group-focus-within:text-lime-400 transition-colors"></i>
+              <i className="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 text-[10px] pointer-events-none"></i>
+            </div>
+          </div>
+
+          <div className="relative">
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1 px-1 truncate">Duração (h)</label>
+            <div className="flex items-center h-12 bg-[#020617]/50 border border-white/5 rounded-xl overflow-hidden transition-all shadow-inner group focus-within:ring-2 focus-within:ring-lime-500/50">
+              <button 
+                onClick={() => setDuration(prev => Math.max(0, prev - 1))}
+                className="w-12 h-full flex items-center justify-center text-slate-500 hover:bg-slate-800 active:bg-slate-700 transition-colors border-r border-white/5 hover:text-lime-400"
+              >
+                <i className="fas fa-minus text-xs"></i>
+              </button>
+              <div className="flex-1 relative h-full">
+                <select
+                  value={duration}
+                  onChange={(e) => setDuration(parseInt(e.target.value))}
+                  className="w-full h-full bg-transparent appearance-none text-center font-black text-slate-200 text-base outline-none cursor-pointer"
                 >
-                  <i className="fas fa-minus text-[10px]"></i>
-                </button>
-                <div className="flex-1 relative h-full">
-                  <select
-                    value={duration}
-                    onChange={(e) => setDuration(parseInt(e.target.value))}
-                    className="w-full h-full bg-transparent appearance-none text-center font-black text-slate-200 text-sm outline-none cursor-pointer"
-                  >
-                    {Array.from({ length: 25 }, (_, i) => (
-                      <option key={i} value={i} className="text-slate-300 bg-slate-900">
-                        {i}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <button 
-                  onClick={() => setDuration(prev => Math.min(24, prev + 1))}
-                  className="w-10 h-full flex items-center justify-center text-slate-400 hover:bg-slate-800 active:bg-slate-700 transition-colors border-l border-white/5 hover:text-lime-400"
-                >
-                  <i className="fas fa-plus text-[10px]"></i>
-                </button>
+                  {Array.from({ length: 25 }, (_, i) => (
+                    <option key={i} value={i} className="text-slate-300 bg-slate-900">
+                      {i}
+                    </option>
+                  ))}
+                </select>
               </div>
+              <button 
+                onClick={() => setDuration(prev => Math.min(24, prev + 1))}
+                className="w-12 h-full flex items-center justify-center text-slate-400 hover:bg-slate-800 active:bg-slate-700 transition-colors border-l border-white/5 hover:text-lime-400"
+              >
+                <i className="fas fa-plus text-xs"></i>
+              </button>
             </div>
           </div>
 
@@ -163,7 +164,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
               </div>
               <div className="text-right shrink-0">
                 <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">Valor Estimado</span>
-                <span className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-500 drop-shadow-sm">{formatCurrency(currentValue)}</span>
+                <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-green-500 drop-shadow-sm">{formatCurrency(currentValue)}</span>
               </div>
             </div>
           </div>
@@ -183,7 +184,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
         <div className="bg-[#0f172a]/50 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-white/5 transition-all">
           <div className="bg-white/5 p-3 border-b border-white/5 flex justify-between items-center">
             <h3 className="font-black text-slate-300 flex items-center uppercase text-[9px] tracking-widest">
-              <i className="fas fa-list mr-1.5 text-lime-400"></i> Serviços Temporários
+              <i className="fas fa-list mr-1.5 text-lime-400"></i> Resumo dos Extras
             </h3>
             <span className="bg-lime-500/20 text-lime-400 text-[8px] font-bold px-1.5 py-0.5 rounded-full border border-lime-500/30">{records.length}</span>
           </div>
@@ -205,7 +206,7 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-2 text-right font-black text-slate-300">
+                    <td className="px-3 py-2 text-right font-black text-slate-300 text-sm">
                       {formatCurrency(record.value)}
                     </td>
                     <td className="px-3 py-2 text-right">
@@ -219,8 +220,11 @@ const CalculatorTab: React.FC<CalculatorTabProps> = ({
             </table>
           </div>
           <div className="p-3 bg-white/5 border-t border-white/5">
-            <button onClick={onPostToMonthly} className="w-full bg-gradient-to-r from-lime-600 to-green-600 hover:from-lime-500 hover:to-green-500 text-white font-black py-2.5 rounded-xl transition-all shadow-lg shadow-lime-900/20 uppercase tracking-widest text-[9px] active:scale-95 border border-white/10">
-              Mover para Controle Mensal ({formatCurrency(totalValue)})
+            <button 
+              onClick={onPostToMonthly} 
+              className="w-full bg-gradient-to-r from-lime-600 to-green-600 hover:from-lime-500 hover:to-green-500 text-white font-black py-2.5 rounded-xl transition-all shadow-lg shadow-lime-900/20 uppercase tracking-widest text-[9px] active:scale-95 border border-white/10"
+            >
+              Salvar no Controle Mensal ({formatCurrency(totalValue)})
             </button>
           </div>
         </div>

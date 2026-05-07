@@ -15,6 +15,14 @@ interface MonthGroup {
   year: string;
   totalHours: number;
   totalValue: number;
+  redScaleDiurnoHours: number;
+  redScaleDiurnoValue: number;
+  redScaleNoturnoHours: number;
+  redScaleNoturnoValue: number;
+  blueScaleDiurnoHours: number;
+  blueScaleDiurnoValue: number;
+  blueScaleNoturnoHours: number;
+  blueScaleNoturnoValue: number;
   count: number;
   items: WorkRecord[];
 }
@@ -23,11 +31,18 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
   const [expandedMonth, setExpandedMonth] = useState<string | null>(null);
   const [editingRaiId, setEditingRaiId] = useState<string | null>(null);
   const [tempRai, setTempRai] = useState<string>('');
+  
+  const years = React.useMemo(() => {
+    const y = new Set<string>(records.map(r => r.date.split('-')[0]));
+    return Array.from(y).sort((a, b) => parseInt(b) - parseInt(a));
+  }, [records]);
+
+  const [selectedYear, setSelectedYear] = useState<string>(years[0] || new Date().getFullYear().toString());
 
   const monthlyData = React.useMemo(() => {
     const groups: Record<string, MonthGroup> = {};
 
-    records.forEach(r => {
+    records.filter(r => r.date.startsWith(selectedYear)).forEach(r => {
       const [year, month] = r.date.split('-');
       const key = `${year}-${month}`;
       
@@ -38,19 +53,68 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
           year,
           totalHours: 0,
           totalValue: 0,
+          redScaleDiurnoHours: 0,
+          redScaleDiurnoValue: 0,
+          redScaleNoturnoHours: 0,
+          redScaleNoturnoValue: 0,
+          blueScaleDiurnoHours: 0,
+          blueScaleDiurnoValue: 0,
+          blueScaleNoturnoHours: 0,
+          blueScaleNoturnoValue: 0,
           count: 0,
           items: []
         };
       }
       
+      // Calculate breakdown
+      let currentDateTime = new Date(r.date + 'T' + r.startHour);
+      
+      for (let i = 0; i < r.duration; i++) {
+        const hour = currentDateTime.getHours();
+        const dayOfWeek = currentDateTime.getDay();
+        const isNight = (hour >= 22 || hour <= 4);
+        
+        let operationalDay;
+        if (isNight && hour <= 4) {
+          const tempDate = new Date(currentDateTime);
+          tempDate.setDate(tempDate.getDate() - 1);
+          operationalDay = tempDate.getDay();
+        } else {
+          operationalDay = dayOfWeek;
+        }
+
+        const isRedScale = (operationalDay === 5 || operationalDay === 6 || operationalDay === 0);
+        const rate = isRedScale ? (isNight ? 41.38 : 36.41) : (isNight ? 29.80 : 26.47);
+        
+        if (isRedScale) {
+          if (isNight) {
+            groups[key].redScaleNoturnoHours += 1;
+            groups[key].redScaleNoturnoValue += rate;
+          } else {
+            groups[key].redScaleDiurnoHours += 1;
+            groups[key].redScaleDiurnoValue += rate;
+          }
+        } else {
+          if (isNight) {
+            groups[key].blueScaleNoturnoHours += 1;
+            groups[key].blueScaleNoturnoValue += rate;
+          } else {
+            groups[key].blueScaleDiurnoHours += 1;
+            groups[key].blueScaleDiurnoValue += rate;
+          }
+        }
+        
+        currentDateTime.setHours(currentDateTime.getHours() + 1);
+      }
+
       groups[key].totalHours += r.duration;
       groups[key].totalValue += r.value;
       groups[key].count += 1;
       groups[key].items.push(r);
     });
 
-    return Object.values(groups).sort((a, b) => b.monthYear.localeCompare(a.monthYear));
-  }, [records]);
+    return Object.values(groups).sort((a, b) => a.monthYear.localeCompare(b.monthYear));
+  }, [records, selectedYear]);
 
   const startEditRai = (record: WorkRecord) => {
     setEditingRaiId(record.id);
@@ -78,11 +142,20 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
 
   return (
     <div className="animate-fade-in space-y-4 pb-10">
-      <div className="flex items-center space-x-2 mb-2 px-1">
-        <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
-        <h2 className="text-lg font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg">
-          Controle <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-blue-500">Mensal</span>
-        </h2>
+      <div className="flex items-center justify-between mb-2 px-1">
+        <div className="flex items-center space-x-2">
+          <div className="h-6 w-1 bg-gradient-to-b from-lime-400 to-green-600 rounded-full shadow-[0_0_15px_rgba(163,230,53,0.5)]"></div>
+          <h2 className="text-lg font-black text-slate-200 uppercase tracking-tighter drop-shadow-lg">
+            Controle <span className="text-lime-400">Mensal</span>
+          </h2>
+        </div>
+        <select 
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          className="bg-[#020617]/50 border border-white/5 rounded-lg px-3 py-1 text-slate-300 font-black text-xs outline-none focus:ring-2 focus:ring-lime-500/50"
+        >
+          {years.map(y => <option key={y} value={y}>{y}</option>)}
+        </select>
       </div>
 
       <div className="grid gap-4">
@@ -99,8 +172,10 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
                 </h3>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="bg-slate-900/50 px-3 py-1 rounded-full border border-white/5 transition-colors shadow-inner">
-                   <span className="text-[8px] font-bold text-lime-400 uppercase tracking-wider">{item.count} EXTRAS</span>
+                <div className="bg-slate-900/50 px-3 py-1 rounded-full border border-white/5 transition-colors shadow-inner flex items-center justify-center">
+                   <span className="text-[8px] font-bold text-lime-400 uppercase tracking-wider">
+                     {item.count} {item.count === 1 ? 'Extra' : 'Extras'}
+                   </span>
                 </div>
                 <div className={`w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/5 transition-transform duration-300 ${expandedMonth === item.monthYear ? 'rotate-180 bg-white/10' : ''}`}>
                   <i className="fas fa-chevron-down text-slate-500 text-[10px]"></i>
@@ -126,6 +201,27 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
 
             {expandedMonth === item.monthYear && (
               <div className="px-4 pb-4 border-t border-white/5 pt-3 bg-black/20 animate-fade-in transition-colors">
+                <div className="col-span-2 grid grid-cols-2 gap-2 mb-4">
+                  <div className="bg-red-900/10 p-2 rounded-lg border border-red-500/10">
+                    <span className="text-[7px] font-black text-red-400 uppercase tracking-widest block">Escala Vermelha</span>
+                    <div className="text-[9px] font-bold text-red-200">
+                      Diurno: {item.redScaleDiurnoHours}H ({formatCurrency(item.redScaleDiurnoValue)})
+                    </div>
+                    <div className="text-[9px] font-bold text-red-200">
+                      Noturno: {item.redScaleNoturnoHours}H ({formatCurrency(item.redScaleNoturnoValue)})
+                    </div>
+                  </div>
+                  <div className="bg-blue-900/10 p-2 rounded-lg border border-blue-500/10">
+                    <span className="text-[7px] font-black text-blue-400 uppercase tracking-widest block">Escala Azul</span>
+                    <div className="text-[9px] font-bold text-blue-200">
+                      Diurno: {item.blueScaleDiurnoHours}H ({formatCurrency(item.blueScaleDiurnoValue)})
+                    </div>
+                    <div className="text-[9px] font-bold text-blue-200">
+                      Noturno: {item.blueScaleNoturnoHours}H ({formatCurrency(item.blueScaleNoturnoValue)})
+                    </div>
+                  </div>
+                </div>
+
                 <h4 className="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-3 flex items-center">
                   <i className="fas fa-list-ul mr-1.5 text-lime-400"></i> Detalhamento dos Turnos
                 </h4>
@@ -204,12 +300,16 @@ const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ records, onDeleteRe
         <div className="absolute inset-0 bg-gradient-to-br from-lime-500/5 to-blue-600/5 pointer-events-none"></div>
         <div className="flex justify-between items-center relative z-10">
           <div className="space-y-0.5">
-             <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Carga Horária Total</span>
-             <p className="text-lg font-black text-slate-200 transition-colors">{records.reduce((a,c) => a+c.duration, 0)}H</p>
+             <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Carga Horária Total ({selectedYear})</span>
+             <p className="text-lg font-black text-slate-200 transition-colors">
+               {records.filter(r => r.date.startsWith(selectedYear)).reduce((a,c) => a+c.duration, 0)}H
+             </p>
           </div>
           <div className="text-right space-y-0.5">
-             <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Montante Histórico</span>
-             <p className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-blue-500 transition-colors drop-shadow-sm">{formatCurrency(records.reduce((a,c) => a+c.value, 0))}</p>
+             <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.2em]">Montante Anual ({selectedYear})</span>
+             <p className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-blue-500 transition-colors drop-shadow-sm">
+               {formatCurrency(records.filter(r => r.date.startsWith(selectedYear)).reduce((a,c) => a+c.value, 0))}
+             </p>
           </div>
         </div>
       </div>

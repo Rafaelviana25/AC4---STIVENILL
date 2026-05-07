@@ -1,22 +1,17 @@
-package com.stivenill.ac4;
 
-import android.os.Bundle;
-import android.webkit.WebView;
-import com.getcapacitor.BridgeActivity;
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
 
-public class MainActivity extends BridgeActivity {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Adiciona a conexão com o widget apenas se o app estiver pronto
-        if (this.bridge != null && this.bridge.getWebView() != null) {
-            WebView webView = this.bridge.getWebView();
-            webView.addJavascriptInterface(new WidgetBridge(this), "AndroidWidget");
-        }
-    }
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
 }
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

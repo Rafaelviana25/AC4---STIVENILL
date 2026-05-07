@@ -1,83 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0F172A"
-    android:orientation="vertical"
-    android:padding="0dp">
 
-    <!-- Header -->
-    <RelativeLayout
-        android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#0F172A"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
+import { DAYS_OF_WEEK, AC4_RULES, MONTH_NAMES as MONTHS } from './constants';
 
-        <TextView
-            android:id="@+id/btn_prev"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="#1E293B"
-            android:gravity="center"
-            android:text="‹"
-            android:textColor="#94A3B8"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+export const MONTH_NAMES = MONTHS;
 
-        <TextView
-            android:id="@+id/widget_month_year"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="ABRIL 2026"
-            android:textColor="#E2E8F0"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+export const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value);
+};
 
-        <TextView
-            android:id="@+id/btn_next"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="#1E293B"
-            android:gravity="center"
-            android:text="›"
-            android:textColor="#94A3B8"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+export const getWeekdayName = (dateStr: string): string => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr + 'T00:00:00');
+  return DAYS_OF_WEEK[date.getDay()];
+};
 
-    <!-- Weekday Headers -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0F172A"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp">
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEG" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="TER" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUA" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUI" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEX" android:textColor="#64748B" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SÁB" android:textColor="#A3E635" android:textSize="8sp" android:textStyle="bold" />
-        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="DOM" android:textColor="#A3E635" android:textSize="8sp" android:textStyle="bold" />
-    </LinearLayout>
+export const getMonthName = (dateStr: string): string => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr + 'T00:00:00');
+  return MONTH_NAMES[date.getMonth()];
+};
 
-    <!-- Grid -->
-    <GridView
-        android:id="@+id/calendar_grid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#334155"
-        android:horizontalSpacing="1dp"
-        android:numColumns="7"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
-</LinearLayout>
+export const calculateEndHour = (startHour: string, duration: number): string => {
+  if (!startHour) return '--';
+  const [h, m] = startHour.split(':').map(Number);
+  const endH = (h + duration) % 24;
+  return `${String(endH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+};
+
+export const generateHoursOptions = () => {
+  const options = [];
+  for (let i = 0; i < 24; i++) {
+    const hour = String(i).padStart(2, '0');
+    options.push(`${hour}:00`);
+  }
+  return options;
+};
+
+/**
+ * Cálculo AC4 baseando-se nas diretrizes de períodos operacionais:
+ * DIURNO: 05h01 às 21h59
+ * NOTURNO: 22h00 às 05h00 do dia seguinte
+ * 
+ * A lógica de 'Dia Operacional' garante que o Noturno iniciado às 22h 
+ * mantenha o valor do dia de início até as 05h do dia seguinte.
+ */
+export const calculateAC4Breakdown = (dateStr: string, startHourStr: string, duration: number) => {
+  let redHours = 0, redVal = 0, blueHours = 0, blueVal = 0;
+  let currentDateTime = new Date(dateStr + 'T' + startHourStr);
+  
+  for (let i = 0; i < duration; i++) {
+    const hour = currentDateTime.getHours();
+    const dayOfWeek = currentDateTime.getDay();
+    const isNight = (hour >= 22 || hour <= 4);
+    
+    let operationalDay;
+    if (isNight && hour <= 4) {
+      const tempDate = new Date(currentDateTime);
+      tempDate.setDate(tempDate.getDate() - 1);
+      operationalDay = tempDate.getDay();
+    } else {
+      operationalDay = dayOfWeek;
+    }
+
+    const isRedScale = (operationalDay === 5 || operationalDay === 6 || operationalDay === 0);
+    const rate = isRedScale ? (isNight ? 41.38 : 36.41) : (isNight ? 29.80 : 26.47);
+    
+    if (isRedScale) {
+      redHours += 1;
+      redVal += rate;
+    } else {
+      blueHours += 1;
+      blueVal += rate;
+    }
+    
+    currentDateTime.setHours(currentDateTime.getHours() + 1);
+  }
+  
+  return {
+    redHours,
+    redVal: Number(redVal.toFixed(2)),
+    blueHours,
+    blueVal: Number(blueVal.toFixed(2))
+  };
+};
+
+export const calculateAC4Value = (dateStr: string, startHourStr: string, duration: number): number => {
+  const breakdown = calculateAC4Breakdown(dateStr, startHourStr, duration);
+  return Number((breakdown.redVal + breakdown.blueVal).toFixed(2));
+};
