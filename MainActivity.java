@@ -1,12 +1,7 @@
-package com.ac4stivenill.app;
-
-import android.content.Intent;
-import android.widget.RemoteViewsService;
-
-public class CalendarWidgetService extends RemoteViewsService {
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        android.util.Log.d("CalendarWidgetService", "onGetViewFactory called");
-        return new CalendarWidgetFactory(this, intent);
-    }
-}
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-bin.zip
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists

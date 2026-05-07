@@ -1,24 +1,22 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+package com.ac4stivenill.app;
 
-node_modules
-dist
-dist-ssr
-*.local
+import android.os.Bundle;
+import android.webkit.WebView;
+import com.getcapacitor.BridgeActivity;
+import com.ac4stivenill.app.R;
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (this.bridge != null && this.bridge.getWebView() != null) {
+            WebView webView = this.bridge.getWebView();
+            webView.addJavascriptInterface(new WidgetBridge(this), "AndroidWidget");
+        }
+    }
+}

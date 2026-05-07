@@ -11,7 +11,6 @@ import android.widget.RemoteViews
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class CalendarWidgetProvider : AppWidgetProvider() {
@@ -72,18 +71,11 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 val monthNames = arrayOf("JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO")
                 views.setTextViewText(R.id.widget_month_year, "${monthNames[currentMonth]} $currentYear")
 
-                // Calculate days
+                // Calcular os dias para preencher a grade
                 val firstDayOfMonth = Calendar.getInstance()
                 firstDayOfMonth.set(currentYear, currentMonth, 1)
                 val firstDayOfWeek = firstDayOfMonth.get(Calendar.DAY_OF_WEEK)
                 val adjustedFirstDay = if (firstDayOfWeek == Calendar.SUNDAY) 6 else firstDayOfWeek - 2
-
-                val daysInMonth = firstDayOfMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
-                
-                val prevMonth = Calendar.getInstance()
-                prevMonth.set(currentYear, currentMonth, 1)
-                prevMonth.add(Calendar.MONTH, -1)
-                val prevMonthDays = prevMonth.getActualMaximum(Calendar.DAY_OF_MONTH)
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
@@ -130,7 +122,6 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                         views.setInt(cellId, "setBackgroundColor", Color.parseColor(bgColor))
                         views.setTextColor(cellId, Color.parseColor(textColor))
                     } catch (e: Exception) {
-                        // Fallback colors if parsing fails
                         views.setInt(cellId, "setBackgroundColor", Color.parseColor("#334155"))
                         views.setTextColor(cellId, Color.WHITE)
                     }

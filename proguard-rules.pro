@@ -1,42 +1,28 @@
-package com.meuapp.calendario
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0f172a"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:gravity="center">
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meu Calendário"
+        android:textColor="#a3e635"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var webView: WebView
+    <TextView
+        android:id="@+id/widget_texto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:text="Carregando..."
+        android:gravity="center" />
 
-    @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        webView = WebView(this)
-        setContentView(webView)
-
-        val webSettings: WebSettings = webView.settings
-        webSettings.javaScriptEnabled = true
-        webSettings.domStorageEnabled = true
-        
-        // Adiciona a interface para comunicação com o Widget
-        webView.addJavascriptInterface(WebAppInterface(this), "AndroidWidget")
-
-        webView.webViewClient = WebViewClient()
-        webView.webChromeClient = WebChromeClient()
-
-        // URL do seu aplicativo web
-        webView.loadUrl("https://ais-dev-lxmjumbtt5gjpvtyqel34d-16976772385.us-west1.run.app")
-    }
-    
-    override fun onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
-    }
-}
+</LinearLayout>

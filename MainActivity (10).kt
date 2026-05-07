@@ -10,7 +10,7 @@
         android:label="Meu Calendário"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.MeuCalendario">
 
         <activity
             android:name=".MainActivity"

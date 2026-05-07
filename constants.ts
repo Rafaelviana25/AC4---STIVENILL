@@ -1,27 +1,22 @@
-import { createClient } from '@supabase/supabase-js';
+package com.stivenill.ac4;
 
-// Função para limpar as chaves de qualquer caractere invisível ou espaço
-const cleanKey = (key: string) => {
-  if (!key) return '';
-  return key.trim().replace(/[\x00-\x1F\x7F-\x9F]/g, "").replace(/\s/g, '');
-};
+import android.os.Bundle;
+import android.webkit.WebView;
+import com.getcapacitor.BridgeActivity;
 
-const rawUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-const supabaseUrl = cleanKey(rawUrl).replace(/\/$/, '');
-let supabaseAnonKey = cleanKey(rawKey);
-
-// Se o usuário colou "sb_ey..." (prefixo sb_ concatenado com JWT), removemos o prefixo.
-if (supabaseAnonKey.startsWith('sb_ey')) {
-  supabaseAnonKey = supabaseAnonKey.substring(3);
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Adiciona a conexão com o widget apenas se o app estiver pronto
+        if (this.bridge != null && this.bridge.getWebView() != null) {
+            WebView webView = this.bridge.getWebView();
+            webView.addJavascriptInterface(new WidgetBridge(this), "AndroidWidget");
+        }
+    }
 }
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
-    storageKey: 'ac4-session-v4'
-  }
-});

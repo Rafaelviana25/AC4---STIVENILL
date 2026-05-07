@@ -1,74 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F172A"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-import React, { useEffect, useState } from 'react';
+    <TextView
+        android:id="@+id/widget_month_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="MARÇO 2026"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:paddingBottom="4dp" />
 
-const SplashScreen: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(true);
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        android:paddingBottom="4dp">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEG" android:textColor="#94A3B8" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="TER" android:textColor="#94A3B8" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUA" android:textColor="#94A3B8" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="QUI" android:textColor="#94A3B8" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SEX" android:textColor="#94A3B8" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="SÁB" android:textColor="#A3E635" android:textSize="9sp" android:textStyle="bold"/>
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="DOM" android:textColor="#A3E635" android:textSize="9sp" android:textStyle="bold"/>
+    </LinearLayout>
 
-  return (
-    <div className={`fixed inset-0 z-[100] bg-[#020617] flex flex-col items-center justify-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="absolute inset-0 bg-gradient-to-br from-lime-900/20 via-[#0f172a] to-blue-900/20 pointer-events-none"></div>
-      
-      <div className="relative flex flex-col items-center animate-fade-in z-10">
-        {/* Container da Logo (Distintivo AC4) */}
-        <div className="relative w-64 h-72 flex items-center justify-center group">
-          <div className="absolute inset-0 bg-gradient-to-tr from-lime-500/30 to-blue-500/30 blur-[60px] rounded-full animate-pulse"></div>
-          <img 
-            src="logo.png" 
-            alt="AC4 Tactical Badge" 
-            className="w-full h-full object-contain drop-shadow-[0_0_50px_rgba(163,230,53,0.3)] animate-badge-entrance relative z-10 transition-transform duration-700 group-hover:scale-105"
-            onError={(e) => {
-              console.error("Erro ao carregar logo.png na Splash Screen");
-            }}
-          />
-        </div>
-        
-        <div className="mt-12 flex flex-col items-center text-center space-y-6">
-          <h2 className="text-2xl font-black uppercase tracking-tighter italic drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] flex items-center gap-2">
-            <span className="text-lime-500">AC4</span>
-            <span className="text-white opacity-40">-</span>
-            <span className="text-white">STIVENILL</span>
-          </h2>
-          
-          {/* Barra de carregamento tática */}
-          <div className="relative h-1.5 w-64 bg-slate-800/50 rounded-full overflow-hidden border border-white/10 backdrop-blur-sm shadow-inner">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-lime-500/50 to-transparent w-1/2 animate-loading-bar blur-sm"></div>
-            <div className="h-full bg-gradient-to-r from-lime-400 via-green-500 to-blue-500 w-full animate-loading-bar shadow-[0_0_10px_rgba(163,230,53,0.8)]"></div>
-          </div>
-          
-          <p className="text-[10px] font-black uppercase tracking-[0.5em] text-lime-400/80 animate-pulse drop-shadow-sm">
-            Sincronizando Módulos Operacionais
-          </p>
-        </div>
-      </div>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_0" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_1" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_3" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_4" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_5" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_6" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_7" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_8" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_9" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_10" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_11" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_12" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_13" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_14" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_15" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_16" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_17" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_18" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_19" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_20" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_21" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_22" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_23" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_24" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_25" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_26" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_27" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_28" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_29" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_30" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_31" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_32" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_33" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_34" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal" android:weightSum="7">
+        <TextView android:id="@+id/cell_35" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_36" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_37" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_38" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_39" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_40" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/cell_41" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:textSize="10sp" android:textStyle="bold" android:layout_margin="1dp" android:background="#1E293B" android:textColor="#FFFFFF"/>
+    </LinearLayout>
 
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes badge-entrance {
-          0% { transform: scale(0.8) translateY(30px); opacity: 0; filter: brightness(0) contrast(1.5); }
-          100% { transform: scale(1) translateY(0); opacity: 1; filter: brightness(1.1) contrast(1.1); }
-        }
-        @keyframes aura-pulse {
-          0%, 100% { opacity: 0.3; transform: scale(0.95); }
-          50% { opacity: 0.6; transform: scale(1.2); }
-        }
-        @keyframes loading-bar {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        .animate-badge-entrance {
-          animation: badge-entrance 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animate-aura-pulse {
-          animation: aura-pulse 4s ease-in-out infinite;
-        }
-        .animate-loading-bar {
-          animation: loading-bar 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-      `}} />
-    </div>
-  );
-};
-
-export default SplashScreen;
+</LinearLayout>

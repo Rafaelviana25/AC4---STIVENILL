@@ -1,12 +1,4 @@
-import { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  appId: 'com.ac4stivenill.app',
-  appName: 'AC4 STIVENILL',
-  webDir: 'dist',
-  server: {
-    androidScheme: 'https'
-  }
-};
-
-export default config;
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="#A3E635" />
+</shape>
