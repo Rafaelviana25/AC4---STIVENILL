@@ -495,7 +495,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
         )}
       </div>
 
-      <div className="flex-1 flex flex-col justify-start space-y-3">
+      <div className="flex flex-col space-y-3">
         <button 
           onClick={() => setShowReportsMenu(true)}
           className="w-full bg-slate-900/50 border border-white/5 rounded-2xl p-4 flex items-center justify-between group hover:bg-slate-800/50 transition-all active:scale-[0.98]"
@@ -568,7 +568,7 @@ const ProfileTab: React.FC<ProfileTabProps> = ({ userPrefix, onRestore, onShowTo
         </div>
       </div>
 
-      <div className="mt-auto pb-6 text-center">
+      <div className="mt-10 pb-6 text-center">
         <a 
           href="https://ac4stivenill.vercel.app" 
           target="_blank" 
